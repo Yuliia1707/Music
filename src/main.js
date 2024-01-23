@@ -55,10 +55,14 @@ function createBtn () {
     }
     document.addEventListener("keydown", function(e) {
         const pressedBtn = keyBtnEl[e.code];
-        pressedBtn.classList.add("active");
+        if (pressedBtn) {
+            pressedBtn.classList.add("active");
+        }
     });
     document.addEventListener("keyup", function(e) {
         const pressedBtn = keyBtnEl[e.code];
-        pressedBtn.classList.remove("active");
+        if (pressedBtn) {
+            pressedBtn.classList.remove("active");
+        }
     });
 }

@@ -115,7 +115,7 @@ body {
     color: var(--primary) ;
 }
 
-.simple_btn:active {
+.simple_btn.active {
     background-color: var(--primary);
     color: var(--contrast);
     box-shadow: 0px 0px 36px 3px var(--contrast);
