@@ -43,26 +43,46 @@ function changeTheme () {
 
 function createBtn () {
     const simpleWrapEl = getEl('#simple_ref');
-    const keyName = "Key";
-    const keyBtn = ['w', 'e', 'r', 's', 'd', 'f', 'x', 'c', 'v'];
-    const keyBtnEl = {};
-    for(let i=0; i<keyBtn.length; i++) {
-        const btnEl = createEl("button");
-        btnEl.innerHTML = keyBtn[i];
-        btnEl.classList.add("simple_btn");
-        keyBtnEl[keyName + keyBtn [i].toUpperCase()] = btnEl;
-        simpleWrapEl.appendChild(btnEl);
+    const keyName = "Key"; 
+    function getAudioPath(nameAudio, pathToAudio = '../assets/sounds/') {
+        return pathToAudio+nameAudio;
     }
+    const keyBtn = [
+        {key: "w", audio: getAudioPath('nota-do.mp3'),},
+        {key: "e", audio: getAudioPath('music-drum-loop-1.mp3'),},
+        {key: "r", audio: getAudioPath('cymbal_accent_01.mp3'),},
+        {key: "s", audio: getAudioPath('c0186eb6cc5bbab.mp3'),},
+        {key: "d", audio: getAudioPath('8193607b76ed518.mp3'),},
+        {key: "f", audio: getAudioPath('3827f679ad62c4b.mp3'),},
+        {key: "x", audio: getAudioPath('9d0152420edde72.mp3'),},
+        {key: "c", audio: getAudioPath('7eefab59f1d924b.mp3'),},
+        {key: "v", audio: getAudioPath('0e66bac11868f97.mp3'),},
+    ];
+    const keyBtnEl = {};
+    keyBtn.forEach((item, index) => {
+        const audio = new Audio(item.audio)
+        const btnEl = createEl("button");
+        btnEl.innerHTML = item.key;
+        btnEl.classList.add("simple_btn");
+        keyBtnEl[keyName + item.key.toUpperCase()] = {
+            btnEl,
+            audio
+        };
+        simpleWrapEl.appendChild(btnEl);
+    })
     document.addEventListener("keydown", function(e) {
         const pressedBtn = keyBtnEl[e.code];
         if (pressedBtn) {
-            pressedBtn.classList.add("active");
+            pressedBtn.audio.play();
+            pressedBtn.btnEl.classList.add("active");
         }
     });
     document.addEventListener("keyup", function(e) {
         const pressedBtn = keyBtnEl[e.code];
         if (pressedBtn) {
-            pressedBtn.classList.remove("active");
+            pressedBtn.audio.pause();
+            pressedBtn.audio.currentTime = 0;
+            pressedBtn.btnEl.classList.remove("active");
         }
     });
 }
